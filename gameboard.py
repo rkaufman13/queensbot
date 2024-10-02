@@ -58,7 +58,7 @@ class BlackjackAgent:
         self.training_error = []
         
 
-    def get_action(self, obs: tuple[int, int, bool]) -> int:
+    def get_action(self, obs: tuple[np.ndarray]) -> int:
         """
         Returns the best action with probability (1 - epsilon)
         otherwise a random action with probability epsilon to ensure exploration.
@@ -69,15 +69,15 @@ class BlackjackAgent:
 
         # with probability (1 - epsilon) act greedily (exploit)
         else:
-            return int(np.argmax(self.q_values[obs]))
+            return int(np.argmax(self.q_values[tuple(np.ndarray.flatten(obs))]))
 
     def update(
         self,
-        obs: tuple[int, int, bool],
+        obs: tuple[np.ndarray],
         action: int,
         reward: float,
         terminated: bool,
-        next_obs: tuple[int, int, bool],
+        next_obs: tuple[np.ndarray],
     ):
 
         """Updates the Q-value of an action."""
